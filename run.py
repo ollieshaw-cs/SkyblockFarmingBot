@@ -1,0 +1,36 @@
+import sys
+import minescript as ms
+import time
+import modules.MacroBot as MacroBot
+import json
+import modules.Inputs as Inputs
+from BotJsonPath import botsJsonPath
+
+
+if len(sys.argv) < 3:
+    runTime = 86400 * 7
+else:
+    runTime = int(sys.argv[2])
+
+scriptToRun: str = sys.argv[1]
+
+scripts = {
+    "mushroom" : "Scripts\Farm\Mushroom\Mushroom_bot",
+    "pumpkin" : "Scripts\Farm\Pumpkin\Pumpkin_bot"
+}
+
+if (scriptToRun in list(scripts.keys())):
+
+    ms.execute(f"\{scripts.get(scriptToRun)} {runTime}")
+
+    time.sleep(runTime)
+
+    with open(botsJsonPath, 'r') as file:
+        data = json.load(file)
+        data[scriptToRun] = "stop"
+
+    with open(botsJsonPath, 'w') as file:
+        data = json.dump(data, file, indent=4)
+else:
+    print(f"Unknown script: '{scriptToRun}'\n\noptions:\n{list(scripts.keys())}")
+
