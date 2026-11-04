@@ -6,11 +6,16 @@ import json
 import modules.Inputs as Inputs
 from BotJsonPath import botsJsonPath
 
+timeConversion = {
+    "seconds" : 1,
+    "minutes" : 60,
+    "hours" : 3600
+}
 
 if len(sys.argv) < 3:
     runTime = 86400 * 7
 else:
-    runTime = int(sys.argv[2])
+    runTime = int(sys.argv[2]) * timeConversion.get(sys.argv[3])
 
 scriptToRun: str = sys.argv[1]
 
