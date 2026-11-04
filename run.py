@@ -4,7 +4,7 @@ import time
 import modules.MacroBot as MacroBot
 import json
 import modules.Inputs as Inputs
-from BotJsonPath import botsJsonPath
+from BotJsonPath import getBotJsonPath
 
 timeConversion = {
     "seconds" : 1,
@@ -30,11 +30,11 @@ if (scriptToRun in list(scripts.keys())):
 
     time.sleep(runTime)
 
-    with open(botsJsonPath, 'r') as file:
+    with open(getBotJsonPath(__file__), 'r') as file:
         data = json.load(file)
         data[scriptToRun] = "stop"
 
-    with open(botsJsonPath, 'w') as file:
+    with open(getBotJsonPath(__file__), 'w') as file:
         data = json.dump(data, file, indent=4)
 else:
     print(f"Unknown script: '{scriptToRun}'\n\noptions:\n{list(scripts.keys())}")

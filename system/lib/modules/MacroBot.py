@@ -4,7 +4,7 @@ import re
 import json
 from typing import Callable
 from abc import ABC, abstractmethod
-from BotJsonPath import botsJsonPath
+from BotJsonPath import getBotJsonPath
 
 class MacroBot:
 
@@ -18,11 +18,11 @@ class MacroBot:
 
     def stop(self, BOT_ID: str):
 
-        with open(botsJsonPath, 'r') as f:
+        with open(getBotJsonPath(__file__), 'r') as f:
             data = json.load(f)
             data[BOT_ID] = "stop"
 
-        with open(botsJsonPath, 'w') as f:
+        with open(getBotJsonPath(__file__), 'w') as f:
             json.dump(data, f, indent=4)
 
         self.running = False

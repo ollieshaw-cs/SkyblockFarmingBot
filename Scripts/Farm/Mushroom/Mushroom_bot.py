@@ -8,7 +8,7 @@ import modules.Inputs as Inputs
 import modules.MacroBot as MB
 from modules.MacroBot import MacroBot
 from typing_extensions import override
-from BotJsonPath import botsJsonPath
+from BotJsonPath import getBotJsonPath
 
 class MushroomBot(MacroBot):
     LEFT_Z = 238.700
@@ -37,11 +37,11 @@ class MushroomBot(MacroBot):
 
         super().__init__(BOT_ID="mushroom")
 
-        with open(botsJsonPath, 'r') as f:
+        with open(getBotJsonPath(__file__), 'r') as f:
             data = json.load(f)
             data[self.BOT_ID] = "running"
 
-        with open(botsJsonPath, 'w') as f:
+        with open(getBotJsonPath(__file__), 'w') as f:
             json.dump(data, f, indent=4)
              
         
@@ -140,7 +140,7 @@ class MushroomBot(MacroBot):
             x, y, z = MacroBot.get_position()
             yaw, pitch = MacroBot.get_look_direction()
 
-            with open(botsJsonPath, 'r') as f:
+            with open(getBotJsonPath(__file__), 'r') as f:
                 data = json.load(f)
                 shouldStop = True if data[self.BOT_ID] == "stop" else False
 
