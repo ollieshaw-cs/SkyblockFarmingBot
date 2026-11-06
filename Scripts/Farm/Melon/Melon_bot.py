@@ -26,7 +26,7 @@ class MelonBot(MacroBot):
         self.farmingToolKeybind = farmingToolKeybind
         self.squeakyMousematKeybind = squeakyMousematKeybind
 
-        super().__init__(BOT_ID="pumpkin")
+        super().__init__(BOT_ID="melon")
 
         with open(getBotJsonPath(__file__), 'r') as f:
             data = json.load(f)
@@ -137,7 +137,7 @@ class MelonBot(MacroBot):
                 self.getBackIntoGarden()
                 continue
 
-            if x == -174.700 and z == 238.700:
+            if x == -233.700 and z == 238.700:
                 self.warpBackToStart()
                 time.sleep(2)
                 continue
