@@ -1,7 +1,7 @@
 from pathlib import Path
 
-def getBotJsonPath(source):
-    current = Path(source).resolve().parent
+def getBotJsonPath(__file):
+    current = Path(__file).resolve().parent
 
     while current != current.parent:
         botsJsonPath = current / "bots.json"

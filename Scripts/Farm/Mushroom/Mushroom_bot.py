@@ -8,7 +8,7 @@ import modules.Inputs as Inputs
 import modules.MacroBot as MB
 from modules.MacroBot import MacroBot
 from typing_extensions import override
-from BotJsonPath import getBotJsonPath
+from modules.Utilities.BotJsonPath import getBotJsonPath
 
 class MushroomBot(MacroBot):
     LEFT_Z = 238.700
@@ -60,7 +60,7 @@ class MushroomBot(MacroBot):
 
         time.sleep(1)
         Inputs.pressKey(self.farmingLeftMousematKeybind)
-        time.sleep(random.uniform(0.5, 2))
+        time.sleep(random.uniform(1, 2))
 
         Inputs.leftMouseDown()
         Inputs.leftMouseUp()
@@ -74,7 +74,7 @@ class MushroomBot(MacroBot):
 
         time.sleep(1)
         Inputs.pressKey(self.farmingRightMousematKeybind)
-        time.sleep(random.uniform(0.5, 2))
+        time.sleep(random.uniform(1, 2))
 
         Inputs.leftMouseDown()
         Inputs.leftMouseUp()

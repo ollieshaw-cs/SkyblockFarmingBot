@@ -2,10 +2,15 @@ import modules.Inputs as Inputs
 import time
 import random
 import json
+import minescript as ms
+
 
 from modules.MacroBot import MacroBot
 from typing_extensions import override
-from BotJsonPath import getBotJsonPath
+from modules.Utilities.BotJsonPath import getBotJsonPath
+from modules.Utilities import ScoreboardHandler
+
+Inputs.onKeyPress("pumpkin", "q", lambda x: ms.execute("/warp hub"))
 
 class PumpkinBot(MacroBot):
 
@@ -14,6 +19,7 @@ class PumpkinBot(MacroBot):
         *,
         farmingToolKeybind: str,
         squeakyMousematKeybind: str
+        
     ):
         self.farmingDirection = "left"
         self.onFarmLeftCooldown = False
@@ -38,7 +44,7 @@ class PumpkinBot(MacroBot):
 
         self.onFarmLeftCooldown = False
         Inputs.leftMouseUp()
-        time.sleep(random.uniform(1.5, 3.5))
+        time.sleep(random.uniform(2, 4))
         Inputs.releaseAllInputs()
         self.farmingDirection = "right"
 
@@ -57,12 +63,12 @@ class PumpkinBot(MacroBot):
 
         self.onFarmRightCooldown = False
         Inputs.leftMouseUp()
-        time.sleep(random.uniform(0, 2))
+        time.sleep(random.uniform(2, 4))
         Inputs.releaseAllInputs()
         self.farmingDirection = "left"
 
         Inputs.pressKey(self.squeakyMousematKeybind, random.uniform(0, 0.75))
-        time.sleep(random.uniform(0.5, 1.5))
+        time.sleep(random.uniform(1, 2))
         Inputs.leftMouseDown()
         Inputs.leftMouseUp()
         time.sleep(random.uniform(0.5, 1.5))
@@ -76,22 +82,73 @@ class PumpkinBot(MacroBot):
         Inputs.pressKey("w")
         Inputs.pressKey("a")
 
+    def warpBackToStart(self):
+        Inputs.releaseAllInputs()
+
+        self.onFarmLeftCooldown = False
+        self.onFarmRightCooldown = False
+
+        time.sleep(random.uniform(1, 3))
+        ms.execute("/warp garden")
+        time.sleep(random.uniform(1, 3))
+
+    # TODO: make it so the job doesnt end after running '/l'
+    def getBackIntoGarden(self):
+        Inputs.releaseAllInputs()
+        self.onFarmLeftCooldown = False
+        self.onFarmRightCooldown = False
+
+        time.sleep(10)
+        ms.execute("/l")
+        time.sleep(10)
+        ms.execute("/play skyblock")
+        time.sleep(10)
+        ms.execute("/warp garden")
+        time.sleep(8)
+
     @override
     def runLogic(self):
+
         while self.running:
-            x, y, z = MacroBot.get_position()
+
+            try:
+                position = MacroBot.get_position()
+
+                if position is None:
+                    time.sleep(1)
+                    continue
+
+                x, y, z = position
+
+            except Exception:
+                # Wait while Minecraft is transitioning worlds
+                time.sleep(1)
+                continue
 
             with open(getBotJsonPath(__file__), 'r') as f:
                 data = json.load(f)
-                shouldStop = True if data[self.BOT_ID] == "stop" else False
+                shouldStop = data[self.BOT_ID] == "stop"
 
-            if (shouldStop):
+            if shouldStop:
                 self.stop(self.BOT_ID)
+                break
+
+            isInGarden = ScoreboardHandler.isInGarden()
+
+            if isInGarden is False:
+                print("Transfering you back to the garden...")
+                self.getBackIntoGarden()
+                continue
+
+            if x == -174.700 and z == 238.700:
+                self.warpBackToStart()
+                time.sleep(2)
+                continue
 
             if z == -238.700:
                 self.farmLeft()
 
-            if z == 238.700:
+            elif z == 238.700:
                 self.farmRight()
                 
 

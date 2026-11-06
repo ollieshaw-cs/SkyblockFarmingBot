@@ -54,7 +54,7 @@ def releaseAllInputs():
     held_mouse_buttons.clear()
 
 
-def onKeyPress(BOT_ID, key: str, callback: Callable[[str, str], None]):
+def onKeyPress(BOT_ID, key: str, callback: Callable):
     def handler(event):
         if event.name == key:
             callback(BOT_ID)

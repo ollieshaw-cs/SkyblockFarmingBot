@@ -4,7 +4,7 @@ import time
 import modules.MacroBot as MacroBot
 import json
 import modules.Inputs as Inputs
-from BotJsonPath import getBotJsonPath
+from modules.Utilities.BotJsonPath import getBotJsonPath
 
 timeConversion = {
     "seconds" : 1,

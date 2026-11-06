@@ -2,9 +2,9 @@ import modules.Inputs as Inputs
 import minescript as ms
 import re
 import json
-from typing import Callable
 from abc import ABC, abstractmethod
-from BotJsonPath import getBotJsonPath
+from modules.Utilities.BotJsonPath import getBotJsonPath
+
 
 class MacroBot:
 
@@ -63,6 +63,9 @@ class MacroBot:
         Inputs.onKeyPress(BOD_ID, stopKey, self.stop)
 
         try:
-            self.runLogic()
+            # Register world listener event so minescript doesn't terminate the process when transfering worlds
+            with ms.EventQueue() as event_queue:
+                event_queue.register_world_listener()
+                self.runLogic()
         finally:
             Inputs.releaseAllInputs()
