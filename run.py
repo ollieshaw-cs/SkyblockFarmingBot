@@ -21,7 +21,8 @@ scriptToRun: str = sys.argv[1]
 
 scripts = {
     "mushroom" : "Scripts\Farm\Mushroom\Mushroom_bot",
-    "pumpkin" : "Scripts\Farm\Pumpkin\Pumpkin_bot"
+    "pumpkin" : "Scripts\Farm\Pumpkin\Pumpkin_bot",
+    "melon" : "Scripts\Farm\Melon\Melon_bot"
 }
 
 if (scriptToRun in list(scripts.keys())):
