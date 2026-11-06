@@ -4,13 +4,11 @@ import random
 import json
 import minescript as ms
 
-
 from modules.MacroBot import MacroBot
 from typing_extensions import override
 from modules.Utilities.BotJsonPath import getBotJsonPath
 from modules.Utilities import ScoreboardHandler
 
-Inputs.onKeyPress("pumpkin", "q", lambda x: ms.execute("/warp hub"))
 
 class PumpkinBot(MacroBot):
 
