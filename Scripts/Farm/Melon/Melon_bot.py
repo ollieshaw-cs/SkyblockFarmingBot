@@ -90,7 +90,6 @@ class MelonBot(MacroBot):
         ms.execute("/warp garden")
         time.sleep(random.uniform(1, 3))
 
-    # TODO: make it so the job doesnt end after running '/l'
     def getBackIntoGarden(self):
         Inputs.releaseAllInputs()
         self.onFarmLeftCooldown = False
