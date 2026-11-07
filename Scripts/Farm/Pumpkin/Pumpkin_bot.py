@@ -55,7 +55,7 @@ class PumpkinBot(MacroBot):
         Inputs.pressKey("d")
 
 
-    def farmLeft(self):
+    def farmLeft(self, x):
 
         if (self.onFarmLeftCooldown): return
 
@@ -65,13 +65,16 @@ class PumpkinBot(MacroBot):
         Inputs.releaseAllInputs()
         self.farmingDirection = "left"
 
-        Inputs.pressKey(self.squeakyMousematKeybind, random.uniform(0, 0.75))
-        time.sleep(random.uniform(1, 2))
-        Inputs.leftMouseDown()
-        Inputs.leftMouseUp()
-        time.sleep(random.uniform(0.5, 1.5))
-        Inputs.pressKey(self.farmingToolKeybind)
-        time.sleep(random.uniform(0.5, 2))
+        # only use the mousemat at the start of the farm
+        if x == -150.700:
+            Inputs.pressKey(self.squeakyMousematKeybind, random.uniform(0, 0.75))
+            
+            time.sleep(random.uniform(1, 2))
+            Inputs.leftMouseDown()
+            Inputs.leftMouseUp()
+            time.sleep(random.uniform(0.5, 1.5))
+            Inputs.pressKey(self.farmingToolKeybind)
+            time.sleep(random.uniform(0.5, 2))
 
         Inputs.leftMouseDown()
         time.sleep(random.uniform(0.5, 1))
@@ -143,7 +146,7 @@ class PumpkinBot(MacroBot):
                 continue
 
             if z == -238.700:
-                self.farmLeft()
+                self.farmLeft(x)
 
             elif z == 238.700:
                 self.farmRight()
