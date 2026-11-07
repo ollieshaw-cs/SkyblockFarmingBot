@@ -12,8 +12,15 @@ timeConversion = {
     "hours" : 3600
 }
 
-if len(sys.argv) < 3:
+print()
+for idx, arg in enumerate(sys.argv):
+    print(f"{idx}: {arg}")
+print()
+
+if len(sys.argv) == 2:
     runTime = 86400 * 7
+elif len(sys.argv) == 3:
+    runTime = int(sys.argv[2])
 else:
     runTime = int(sys.argv[2]) * timeConversion.get(sys.argv[3])
 
