@@ -38,5 +38,11 @@ if (scriptToRun in list(scripts.keys())):
     with open(getBotJsonPath(__file__), 'w') as file:
         data = json.dump(data, file, indent=4)
 else:
-    print(f"Unknown script: '{scriptToRun}'\n\noptions:\n{list(scripts.keys())}")
+    ms.echo()
+    ms.echo(f"§cUnknown script:§f '{scriptToRun}', available options are:")
 
+    for bot_name in list(scripts.keys()):
+        ms.echo(f"§e'{bot_name}'")
+
+    ms.echo()
+    ms.echo(rf"§2\run <script> <duration> <time unit>")
