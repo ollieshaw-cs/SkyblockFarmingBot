@@ -32,24 +32,22 @@ scripts = {
     "melon" : "Scripts\Farm\Melon\Melon_bot"
 }
 
-if (scriptToRun in list(scripts.keys())):
+endTime = int(time.time()) + runTime
 
-    ms.execute(f"\{scripts.get(scriptToRun)} {runTime}")
+if scriptToRun in list(scripts.keys()):
 
-    time.sleep(runTime)
+    jsonPath = getBotJsonPath(__file__)
 
-    with open(getBotJsonPath(__file__), 'r') as file:
+    with open(jsonPath, 'r') as file:
         data = json.load(file)
-        data[scriptToRun] = "stop"
 
-    with open(getBotJsonPath(__file__), 'w') as file:
-        data = json.dump(data, file, indent=4)
+    data[scriptToRun] = ["running", endTime]
+
+    with open(jsonPath, 'w') as file:
+        json.dump(data, file, indent=4)
+
+    ms.execute(f"\{scripts.get(scriptToRun)}")
+
 else:
-    ms.echo()
-    ms.echo(f"§cUnknown script:§f '{scriptToRun}', available options are:")
-
-    for bot_name in list(scripts.keys()):
-        ms.echo(f"§e'{bot_name}'")
-
     ms.echo()
     ms.echo(rf"§2\run <script> <duration> <time unit>")

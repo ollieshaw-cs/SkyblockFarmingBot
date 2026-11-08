@@ -21,7 +21,7 @@ class MacroBot:
 
         with open(getBotJsonPath(__file__), 'r') as f:
             data = json.load(f)
-            data[BOT_ID] = "stop"
+            data[BOT_ID] = ["stop", 0]
 
         with open(getBotJsonPath(__file__), 'w') as f:
             json.dump(data, f, indent=4)

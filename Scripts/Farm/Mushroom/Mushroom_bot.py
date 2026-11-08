@@ -38,12 +38,12 @@ class MushroomBot(MacroBot):
 
         super().__init__(BOT_ID="mushroom")
 
-        with open(getBotJsonPath(__file__), 'r') as f:
-            data = json.load(f)
-            data[self.BOT_ID] = "running"
+        # with open(getBotJsonPath(__file__), 'r') as f:
+        #     data = json.load(f)
+        #     data[self.BOT_ID] = ["running", 0]
 
-        with open(getBotJsonPath(__file__), 'w') as f:
-            json.dump(data, f, indent=4)
+        # with open(getBotJsonPath(__file__), 'w') as f:
+        #     json.dump(data, f, indent=4)
              
         
 
@@ -138,6 +138,17 @@ class MushroomBot(MacroBot):
     @override
     def runLogic(self):
         while self.running:
+
+            with open(getBotJsonPath(__file__), 'r') as f:
+                data = json.load(f)
+
+            status, endTime = data[self.BOT_ID]
+
+            if status == "stop" or time.time() >= endTime:
+                print("Bot duration expired. Stopping...")
+                self.stop(self.BOT_ID)
+                break
+
             try:
                 position = MacroBot.get_position()
                 orientation = MacroBot.get_look_direction()
@@ -153,13 +164,6 @@ class MushroomBot(MacroBot):
                 # Wait while Minecraft is transitioning worlds
                 time.sleep(1)
                 continue
-
-            with open(getBotJsonPath(__file__), 'r') as f:
-                data = json.load(f)
-                shouldStop = True if data[self.BOT_ID] == "stop" else False
-
-            if (shouldStop):
-                self.stop(self.BOT_ID)
 
             isInGarden = ScoreboardHandler.isInGarden()
 
