@@ -2,6 +2,7 @@
 import time
 import random
 import json
+import modules.Utilities.ScoreboardHandler as ScoreboardHandler
 
 import minescript as ms
 import modules.Inputs as Inputs
@@ -137,8 +138,21 @@ class MushroomBot(MacroBot):
     @override
     def runLogic(self):
         while self.running:
-            x, y, z = MacroBot.get_position()
-            yaw, pitch = MacroBot.get_look_direction()
+            try:
+                position = MacroBot.get_position()
+                orientation = MacroBot.get_look_direction()
+
+                if position is None or orientation is None:
+                    time.sleep(1)
+                    continue
+
+                x, y, z = position
+                yaw, pitch = orientation
+
+            except Exception:
+                # Wait while Minecraft is transitioning worlds
+                time.sleep(1)
+                continue
 
             with open(getBotJsonPath(__file__), 'r') as f:
                 data = json.load(f)
@@ -146,6 +160,13 @@ class MushroomBot(MacroBot):
 
             if (shouldStop):
                 self.stop(self.BOT_ID)
+
+            isInGarden = ScoreboardHandler.isInGarden()
+
+            if isInGarden is False:
+                print("Transfering you back to the garden...")
+                self.getBackIntoGarden()
+                continue
 
             if round(yaw, 1) > -90.0:
                 self.farming_direction = "right"

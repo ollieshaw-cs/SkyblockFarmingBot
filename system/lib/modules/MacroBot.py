@@ -2,6 +2,7 @@ import modules.Inputs as Inputs
 import minescript as ms
 import re
 import json
+import time
 from abc import ABC, abstractmethod
 from modules.Utilities.BotJsonPath import getBotJsonPath
 
@@ -28,6 +29,19 @@ class MacroBot:
         self.running = False
         Inputs.releaseAllInputs()
         ms.echo("Stopping bot...")
+
+    def getBackIntoGarden(self):
+        Inputs.releaseAllInputs()
+        self.onFarmLeftCooldown = False
+        self.onFarmRightCooldown = False
+
+        time.sleep(10)
+        ms.execute("/l")
+        time.sleep(10)
+        ms.execute("/play skyblock")
+        time.sleep(10)
+        ms.execute("/warp garden")
+        time.sleep(8)
 
     @staticmethod
     def get_position():

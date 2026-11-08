@@ -93,19 +93,6 @@ class PumpkinBot(MacroBot):
         ms.execute("/warp garden")
         time.sleep(random.uniform(1, 3))
 
-    def getBackIntoGarden(self):
-        Inputs.releaseAllInputs()
-        self.onFarmLeftCooldown = False
-        self.onFarmRightCooldown = False
-
-        time.sleep(10)
-        ms.execute("/l")
-        time.sleep(10)
-        ms.execute("/play skyblock")
-        time.sleep(10)
-        ms.execute("/warp garden")
-        time.sleep(8)
-
     @override
     def runLogic(self):
 
