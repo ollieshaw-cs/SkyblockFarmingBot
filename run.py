@@ -12,10 +12,10 @@ timeConversion = {
     "hours" : 3600
 }
 
-print()
-for idx, arg in enumerate(sys.argv):
-    print(f"{idx}: {arg}")
-print()
+# print()
+# for idx, arg in enumerate(sys.argv):
+#     print(f"{idx}: {arg}")
+# print()
 
 if len(sys.argv) == 2:
     runTime = 86400 * 7
