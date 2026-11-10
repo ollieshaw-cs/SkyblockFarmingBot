@@ -27,13 +27,6 @@ class MelonBot(MacroBot):
         self.squeakyMousematKeybind = squeakyMousematKeybind
 
         super().__init__(BOT_ID="melon")
-
-        with open(getBotJsonPath(__file__), 'r') as f:
-            data = json.load(f)
-            data[self.BOT_ID] = "running"
-
-        with open(getBotJsonPath(__file__), 'w') as f:
-            json.dump(data, f, indent=4)
         
 
     def farmRight(self):
@@ -96,6 +89,16 @@ class MelonBot(MacroBot):
 
         while self.running:
 
+            with open(getBotJsonPath(__file__), 'r') as f:
+                data = json.load(f)
+
+            status, endTime = data[self.BOT_ID]
+
+            if status == "stop" or time.time() >= endTime:
+                print("Bot duration expired. Stopping...")
+                self.stop(self.BOT_ID)
+                break
+
             try:
                 position = MacroBot.get_position()
 
@@ -110,13 +113,7 @@ class MelonBot(MacroBot):
                 time.sleep(1)
                 continue
 
-            with open(getBotJsonPath(__file__), 'r') as f:
-                data = json.load(f)
-                shouldStop = data[self.BOT_ID] == "stop"
 
-            if shouldStop:
-                self.stop(self.BOT_ID)
-                break
 
             isInGarden = ScoreboardHandler.isInGarden()
 
