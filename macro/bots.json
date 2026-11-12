@@ -6,5 +6,9 @@
     "pumpkin": [
         "stop",
         0
+    ],
+    "melon": [
+        "stop",
+        0
     ]
 }
