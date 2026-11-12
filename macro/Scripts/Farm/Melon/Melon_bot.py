@@ -1,3 +1,4 @@
+import macro.setup as setup
 import modules.Inputs as Inputs
 import time
 import random

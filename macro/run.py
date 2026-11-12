@@ -1,3 +1,4 @@
+import macro.setup as setup
 import sys
 import minescript as ms
 import time
@@ -27,9 +28,9 @@ else:
 scriptToRun: str = sys.argv[1]
 
 scripts = {
-    "mushroom" : "Scripts\Farm\Mushroom\Mushroom_bot",
-    "pumpkin" : "Scripts\Farm\Pumpkin\Pumpkin_bot",
-    "melon" : "Scripts\Farm\Melon\Melon_bot"
+    "mushroom" : "Mushroom\Mushroom_bot",
+    "pumpkin" : "Pumpkin\Pumpkin_bot",
+    "melon" : "Melon\Melon_bot"
 }
 
 endTime = int(time.time()) + runTime
@@ -46,7 +47,7 @@ if scriptToRun in list(scripts.keys()):
     with open(jsonPath, 'w') as file:
         json.dump(data, file, indent=4)
 
-    ms.execute(f"\{scripts.get(scriptToRun)}")
+    ms.execute(f"\macro\Scripts\Farm\{scripts.get(scriptToRun)}")
 
 else:
     ms.echo()

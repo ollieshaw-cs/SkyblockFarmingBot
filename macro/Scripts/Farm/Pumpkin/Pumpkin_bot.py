@@ -1,3 +1,4 @@
+import macro.setup as setup
 import modules.Inputs as Inputs
 import time
 import random
@@ -35,13 +36,22 @@ class PumpkinBot(MacroBot):
 
         self.onFarmLeftCooldown = False
         Inputs.leftMouseUp()
-        time.sleep(random.uniform(2, 4))
+
+        if not self.wait(random.uniform(2, 4)):
+            return
+
         Inputs.releaseAllInputs()
         self.farmingDirection = "right"
 
-        time.sleep(random.uniform(1, 3))
+
+        if not self.wait(random.uniform(1, 3)):
+            return
+
         Inputs.leftMouseDown()
-        time.sleep(random.uniform(0.1, 1))
+
+        if not self.wait(random.uniform(0.1, 1)):
+            return
+
 
         self.onFarmRightCooldown = True
         Inputs.pressKey("w")
@@ -54,7 +64,10 @@ class PumpkinBot(MacroBot):
 
         self.onFarmRightCooldown = False
         Inputs.leftMouseUp()
-        time.sleep(random.uniform(2, 4))
+
+        if not self.wait(random.uniform(2, 4)):
+            return
+
         Inputs.releaseAllInputs()
         self.farmingDirection = "left"
 
@@ -62,15 +75,27 @@ class PumpkinBot(MacroBot):
         if x == -150.700:
             Inputs.pressKey(self.squeakyMousematKeybind, random.uniform(0, 0.75))
             
-            time.sleep(random.uniform(1, 2))
+
+            if not self.wait(random.uniform(1, 2)):
+                return
+
             Inputs.leftMouseDown()
             Inputs.leftMouseUp()
-            time.sleep(random.uniform(0.5, 1.5))
+
+            if not self.wait(random.uniform(0.5, 1.5)):
+                return
+
             Inputs.pressKey(self.farmingToolKeybind)
-            time.sleep(random.uniform(0.5, 2))
+
+            if not self.wait(random.uniform(0.5, 2)):
+                return
+
 
         Inputs.leftMouseDown()
-        time.sleep(random.uniform(0.5, 1))
+
+        if not self.wait(random.uniform(0.5, 1)):
+            return
+
 
         self.onFarmLeftCooldown = True
         Inputs.pressKey("w")
@@ -82,9 +107,14 @@ class PumpkinBot(MacroBot):
         self.onFarmLeftCooldown = False
         self.onFarmRightCooldown = False
 
-        time.sleep(random.uniform(1, 3))
+
+        if not self.wait(random.uniform(1, 3)):
+            return
+
         ms.execute("/warp garden")
-        time.sleep(random.uniform(1, 3))
+
+        if not self.wait(random.uniform(1, 3)):
+            return
 
     @override
     def runLogic(self):

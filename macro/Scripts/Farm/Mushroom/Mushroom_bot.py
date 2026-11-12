@@ -1,4 +1,4 @@
-
+import macro.setup as setup
 import time
 import random
 import json
