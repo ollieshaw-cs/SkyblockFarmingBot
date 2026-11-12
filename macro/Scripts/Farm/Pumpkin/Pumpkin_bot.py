@@ -154,7 +154,10 @@ class PumpkinBot(MacroBot):
 
             if x == -174.700 and z == 238.700:
                 self.warpBackToStart()
-                time.sleep(2)
+
+                if not self.wait(2):
+                    return
+
                 continue
 
             if z == -238.700:

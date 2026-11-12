@@ -59,28 +59,46 @@ class MushroomBot(MacroBot):
         self.farming_direction = "left"
         Inputs.releaseAllInputs()
 
-        time.sleep(1)
+
+        if not self.wait(1):
+            return
+
         Inputs.pressKey(self.farmingLeftMousematKeybind)
-        time.sleep(random.uniform(1, 2))
+
+        if not self.wait(random.uniform(1, 2)):
+            return
+
 
         Inputs.leftMouseDown()
         Inputs.leftMouseUp()
 
-        time.sleep(random.uniform(1, 3))
+
+        if not self.wait(random.uniform(1, 3)):
+            return
+
         Inputs.pressKey(self.farmingToolKeybind)
 
     def farm_right(self):
         self.farming_direction = "right"
         Inputs.releaseAllInputs()
 
-        time.sleep(1)
+
+        if not self.wait(1):
+            return
+
         Inputs.pressKey(self.farmingRightMousematKeybind)
-        time.sleep(random.uniform(1, 2))
+
+        if not self.wait(random.uniform(1, 2)):
+            return
+
 
         Inputs.leftMouseDown()
         Inputs.leftMouseUp()
 
-        time.sleep(random.uniform(1, 3))
+
+        if not self.wait(random.uniform(1, 3)):
+            return
+
         Inputs.pressKey(self.farmingToolKeybind)
 
     def turn_around(self):
@@ -91,10 +109,16 @@ class MushroomBot(MacroBot):
 
         try:
             Inputs.releaseAllInputs()
-            time.sleep(0.5)
+
+            if not self.wait(0.5):
+                return
+
 
             Inputs.pressKey("s", random.uniform(1, 3))
-            time.sleep(1.7)
+
+            if not self.wait(1.7):
+                return
+
             Inputs.releaseKey("s")
 
             self.farm_right()
@@ -122,9 +146,15 @@ class MushroomBot(MacroBot):
 
         if at_warp and not self.warp_cooldown:
             self.warp_cooldown = True
-            time.sleep(random.uniform(1, 5))
+
+            if not self.wait(random.uniform(1, 5)):
+                return
+
             ms.execute("/warp garden")
-            time.sleep(random.uniform(1, 3))
+
+            if not self.wait(random.uniform(1, 3)):
+                return
+
             return
 
         if at_right and not self.farm_right_cooldown:
